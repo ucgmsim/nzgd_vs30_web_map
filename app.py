@@ -2,6 +2,8 @@ from flask import Flask, render_template, request
 import geopandas as gpd
 from pathlib import Path
 import pandas as pd
+import rasterio
+from rasterio.plot import reshape_as_image
 
 import folium
 from folium.plugins import MarkerCluster
@@ -14,6 +16,8 @@ def map():
 
     load_dir = Path("/home/arr65/data/nzgd/resources")
     info_df = gpd.read_file(load_dir / "vs30_from_data.geojson")
+    info_df = info_df.iloc[0:1000]
+
     if query:
         info_df = info_df[info_df["record_name"] == query]
 
